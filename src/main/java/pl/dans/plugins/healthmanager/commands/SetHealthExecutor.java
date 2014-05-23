@@ -23,7 +23,7 @@ public class SetHealthExecutor implements CommandExecutor {
         String playerName = args[1];
         Double health = Double.parseDouble(args[0]);
         int percent = (int) ((health/20.0)*100);
-        if (playerName.compareTo("*") == 0) {
+        if (playerName.equals("*")) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (player.getMaxHealth() >= health) {
                     player.setHealth(health);
@@ -44,7 +44,7 @@ public class SetHealthExecutor implements CommandExecutor {
         if (player.getMaxHealth() >= health) {
             player.setHealth(health);
             player.sendMessage(ChatColor.GOLD + "Your health was set to " + percent + "%");
-            if (player.getName().compareTo(sender.getName()) != 0) {
+            if (player.getName().equalsIgnoreCase(sender.getName())) {
                 sender.sendMessage(ChatColor.GOLD + playerName + "'s health was set to " + percent + "%");
             }
         } else {
