@@ -10,8 +10,9 @@ Commands
 
 `/setHealth <hearts> <playerName|*>`
 
-<hearts> = number of hearts to have
-<playerName> = the player to set for, or * for all players
+hearts = number of hearts to have
+
+playerName = the player to set for, or * for all players
 
 Permission: HealthManager.sethealth - default op
 
