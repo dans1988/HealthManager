@@ -32,25 +32,25 @@ public class HealthManager extends JavaPlugin implements Listener {
                     if (player.getMaxHealth() >= health) {
                         player.setHealth(health);
                     } else {
-                        sender.sendMessage(new StringBuilder().append(ChatColor.RED).append("Couldn't set health for ").append(player.getName()).append(" - his maximum health is too low").toString());
+                        sender.sendMessage(ChatColor.RED + "Couldn't set health for " + player.getName() + " - his maximum health is too low");
                     }
                     
                 }
-                getServer().broadcastMessage(new StringBuilder().append(ChatColor.GOLD).append("Health of all players was set to ").append(percent).append("%").toString());
+                getServer().broadcastMessage(ChatColor.GOLD + "Health of all players was set to " + percent + "%");
             } else {
                 Player player = server.getPlayer(playerName);
                 if (player == null || !player.isOnline()) {
-                    sender.sendMessage(new StringBuilder().append(ChatColor.RED).append("Player is not online.").toString());
+                    sender.sendMessage(ChatColor.RED + "Player is not online.");
                 }
                 
                 if (player.getMaxHealth() >= health) {
                     player.setHealth(health);
-                    player.sendMessage(new StringBuilder().append(ChatColor.GOLD).append("Your health was set to ").append(percent).append("%").toString());
+                    player.sendMessage(ChatColor.GOLD + "Your health was set to " + percent + "%");
                     if (player.getName().compareTo(sender.getName()) != 0) {
-                        sender.sendMessage(new StringBuilder().append(ChatColor.GOLD).append(playerName).append("'s health was set to ").append(percent).append("%").toString());
+                        sender.sendMessage(ChatColor.GOLD + playerName + "'s health was set to " + percent + "%");
                     }
                 } else {
-                    sender.sendMessage(new StringBuilder().append(ChatColor.RED).append("Couldn't set health for ").append(playerName).append(" - his maximum health is too low").toString());
+                    sender.sendMessage(ChatColor.RED + "Couldn't set health for " + playerName + " - his maximum health is too low");
                     return true;
                 }
             }
@@ -72,21 +72,21 @@ public class HealthManager extends JavaPlugin implements Listener {
                     player.setMaxHealth(health);
                 }
                 
-                getServer().broadcastMessage(new StringBuilder().append(ChatColor.GOLD).append("Maximum health of all players was set to ").append(percent).append("%").toString());
+                getServer().broadcastMessage(ChatColor.GOLD + "Maximum health of all players was set to " + percent + "%");
                 
             } else {
                 
                 Player player = server.getPlayer(playerName);
                 if (player == null || !player.isOnline()) {
-                    sender.sendMessage(new StringBuilder().append(ChatColor.RED).append("Player is not online.").toString());
+                    sender.sendMessage(ChatColor.RED + "Player is not online.");
                     return true;
                 }
                 
                 player.setMaxHealth(health);
-                player.sendMessage(new StringBuilder().append(ChatColor.GOLD).append("Your maximum health was set to ").append(percent).append("%").toString());
+                player.sendMessage(ChatColor.GOLD + "Your maximum health was set to " + percent + "%");
                 
                 if (player.getName().compareTo(sender.getName()) != 0) {
-                    sender.sendMessage(new StringBuilder().append(ChatColor.GOLD).append(playerName).append("'s maximum health was set to ").append(percent).append("%").toString());
+                    sender.sendMessage(ChatColor.GOLD + playerName + "'s maximum health was set to " + percent + "%");
                 }
             }
             
@@ -105,9 +105,9 @@ public class HealthManager extends JavaPlugin implements Listener {
             if (player != null) {
                 Double health = player.getHealth();
                 int percent = (int) ((health/20.0)*100);
-                sender.sendMessage(new StringBuilder().append(ChatColor.AQUA).append(playerName).append("'s health is at ").append(percent).append("%").toString());
+                sender.sendMessage(ChatColor.AQUA + playerName + "'s health is at " + percent + "%");
             } else {
-                sender.sendMessage(new StringBuilder().append(ChatColor.RED).append("Player is not online.").toString());
+                sender.sendMessage(ChatColor.RED + "Player is not online.");
             }
             
             return true;
