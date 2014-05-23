@@ -2,7 +2,6 @@ package pl.dans.plugins.healthmanager.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,7 +11,12 @@ public class SetHealthExecutor implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!command.getName().equalsIgnoreCase("setHealth")) {
+        boolean setMax;
+        if (command.getName().equalsIgnoreCase("setHealth")) {
+            setMax = false;
+        } else if(command.getName().equalsIgnoreCase("setMaxHealth")) {
+            setMax = true;
+        } else {
             return false;
         }
 
@@ -37,27 +41,52 @@ public class SetHealthExecutor implements CommandExecutor {
 
         String playerName = args[1];
 
+        Player[] players;
+
         if (playerName.equals("*")) {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                player.setHealth(Math.min(hpCount, player.getMaxHealth()));
+            players = Bukkit.getOnlinePlayers();
+        } else {
+            Player player = Bukkit.getPlayer(playerName);
+            if (player == null) {
+                sender.sendMessage(ChatColor.RED + "Player is not online.");
+                return true;
             }
-            Bukkit.broadcastMessage(ChatColor.GOLD + "Health of all players was set to " + args[0] + " hearts");
-            return true;
+            players = new Player[]{player};
         }
 
-        Player player = Bukkit.getPlayer(playerName);
-        if (player == null) {
-            sender.sendMessage(ChatColor.RED + "Player is not online.");
-            return true;
-        }
-
-        player.setHealth(Math.min(hpCount, player.getMaxHealth()));
-        player.sendMessage(ChatColor.GOLD + "Your health was set to " + args[0] + " hearts");
-
-        if(!player.getName().equalsIgnoreCase(sender.getName())) {
-            sender.sendMessage(ChatColor.GOLD + "Health of " + player.getName() + " set to " + args[0] + " hearts");
+        if(setMax) {
+            setMaxHealthForAll(hpCount, players);
+            sender.sendMessage(ChatColor.GOLD + "Set max health to " + (hpCount * 2) + " hearts");
+        } else {
+            setHealthForAll(hpCount, players);
+            sender.sendMessage(ChatColor.GOLD + "Set health to " + (hpCount * 2) + " hearts");
         }
 
         return true;
+    }
+
+    /**
+     * Sets the max health for all the provided players
+     * @param maxHealth the health value to set to
+     * @param players the list of player to set for
+     */
+    private void setMaxHealthForAll(double maxHealth, Player... players) {
+        for(Player player : players) {
+            player.setMaxHealth(maxHealth);
+            player.sendMessage(ChatColor.GOLD + "Your max health was set to " + (maxHealth / 2.0D) + " hearts");
+        }
+    }
+
+    /**
+     * Sets the health for all the provided players
+     * @param health the health value to set to
+     * @param players the list of player to set for
+     */
+    private void setHealthForAll(double health, Player... players) {
+        for(Player player : players) {
+            double actualHealth = Math.min(health, player.getMaxHealth());
+            player.setHealth(actualHealth);
+            player.sendMessage(ChatColor.GOLD + "Your health was set to " + (actualHealth / 2.0D) + " hearts");
+        }
     }
 }
