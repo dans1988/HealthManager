@@ -1,6 +1,5 @@
 package pl.dans.plugins.healthmanager;
 
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.dans.plugins.healthmanager.commands.GetHealthExecutor;
 import pl.dans.plugins.healthmanager.commands.SetHealthExecutor;
