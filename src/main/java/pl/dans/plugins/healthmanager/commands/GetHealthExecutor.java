@@ -26,8 +26,7 @@ public class GetHealthExecutor implements CommandExecutor {
             return true;
         }
 
-        Double health = player.getHealth();
-        int percent = (int) ((health/20.0)*100);
+        int percent = (int) (player.getHealth()/player.getMaxHealth()*100D);
         sender.sendMessage(ChatColor.AQUA + args[0] + "'s health is at " + percent + "%");
 
         return true;
