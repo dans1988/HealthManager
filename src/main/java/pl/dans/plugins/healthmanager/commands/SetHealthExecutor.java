@@ -45,8 +45,9 @@ public class SetHealthExecutor implements CommandExecutor {
         }
 
         Player player = Bukkit.getPlayer(playerName);
-        if (player == null || !player.isOnline()) {
+        if (player == null) {
             sender.sendMessage(ChatColor.RED + "Player is not online.");
+            return true;
         }
 
         if (player.getMaxHealth() >= health) {
