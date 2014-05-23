@@ -56,10 +56,10 @@ public class SetHealthExecutor implements CommandExecutor {
 
         if(setMax) {
             setMaxHealthForAll(hpCount, players);
-            sender.sendMessage(ChatColor.GOLD + "Set max health to " + (hpCount * 2) + " hearts");
+            sender.sendMessage(ChatColor.GOLD + "Set max health to " + (hpCount / 2.0D) + " hearts");
         } else {
             setHealthForAll(hpCount, players);
-            sender.sendMessage(ChatColor.GOLD + "Set health to " + (hpCount * 2) + " hearts");
+            sender.sendMessage(ChatColor.GOLD + "Set health to " + (hpCount / 2.0D) + " hearts");
         }
 
         return true;
