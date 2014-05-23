@@ -12,9 +12,21 @@ commands:
     description: Gets health of a player
     usage: /<command> <playerName>
     aliases: h
+    permission: HealthManager.gethealth
+    permission-message: You don't have <permission>
   setMaxHealth:
     description: Sets health of a player
     usage: /<command> <health> <playerName|*>
     permission: HealthManager.setmaxhealth
     permission-message: You don't have <permission>
+permissions:
+  HealthManager.sethealth:
+    description: Allows use of the /setHealth command
+    default: op
+  HealthManager.setmaxhealth:
+    description: Allows use of the /setMaxHealth command
+    default: op
+  HealthManager.gethealth:
+    description: Allows use of the /getHealth or /h command
+    default: true
 
