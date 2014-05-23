@@ -20,8 +20,16 @@ public class SetHealthExecutor implements CommandExecutor {
             return false;
         }
 
+        Double health;
+        try {
+            health = Double.parseDouble(args[0]);
+        } catch (NumberFormatException ex) {
+            sender.sendMessage(ChatColor.RED + args[0] + " is not a number!");
+            return true;
+        }
+
         String playerName = args[1];
-        Double health = Double.parseDouble(args[0]);
+
         int percent = (int) ((health/20.0)*100);
         if (playerName.equals("*")) {
             for (Player player : Bukkit.getOnlinePlayers()) {
