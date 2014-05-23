@@ -20,27 +20,28 @@ public class SetHealthExecutor implements CommandExecutor {
             return false;
         }
 
-        Double health;
+        Double healthInput;
         try {
-            health = Double.parseDouble(args[0]);
+            healthInput = Double.parseDouble(args[0]);
         } catch (NumberFormatException ex) {
             sender.sendMessage(ChatColor.RED + args[0] + " is not a number!");
             return true;
         }
 
+        int hpCount = (int) Math.round(healthInput * 2D);
+
+        if (hpCount <= 0) {
+            sender.sendMessage(ChatColor.RED + "You must provide a number greater than zero");
+            return true;
+        }
+
         String playerName = args[1];
 
-        int percent = (int) ((health/20.0)*100);
         if (playerName.equals("*")) {
             for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.getMaxHealth() >= health) {
-                    player.setHealth(health);
-                } else {
-                    sender.sendMessage(ChatColor.RED + "Couldn't set health for " + player.getName() + " - his maximum health is too low");
-                }
-
+                player.setHealth(Math.min(hpCount, player.getMaxHealth()));
             }
-            Bukkit.broadcastMessage(ChatColor.GOLD + "Health of all players was set to " + percent + "%");
+            Bukkit.broadcastMessage(ChatColor.GOLD + "Health of all players was set to " + args[0] + " hearts");
             return true;
         }
 
@@ -50,15 +51,11 @@ public class SetHealthExecutor implements CommandExecutor {
             return true;
         }
 
-        if (player.getMaxHealth() >= health) {
-            player.setHealth(health);
-            player.sendMessage(ChatColor.GOLD + "Your health was set to " + percent + "%");
-            if (player.getName().equalsIgnoreCase(sender.getName())) {
-                sender.sendMessage(ChatColor.GOLD + playerName + "'s health was set to " + percent + "%");
-            }
-        } else {
-            sender.sendMessage(ChatColor.RED + "Couldn't set health for " + playerName + " - his maximum health is too low");
-            return true;
+        player.setHealth(Math.min(hpCount, player.getMaxHealth()));
+        player.sendMessage(ChatColor.GOLD + "Your health was set to " + args[0] + " hearts");
+
+        if(!player.getName().equalsIgnoreCase(sender.getName())) {
+            sender.sendMessage(ChatColor.GOLD + "Health of " + player.getName() + " set to " + args[0] + " hearts");
         }
 
         return true;
