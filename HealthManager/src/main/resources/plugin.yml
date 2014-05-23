@@ -1,0 +1,20 @@
+name: HealthManager
+main: pl.dans.plugins.healthmanager.HealthManager
+version: 1.0
+  
+commands:
+  setHealth:
+    description: Sets health of a player
+    usage: /<command> <health> <playerName|*>
+    permission: HealthManager.sethealth
+    permission-message: You don't have <permission>
+  getHealth:
+    description: Gets health of a player
+    usage: /<command> <playerName>
+    aliases: h
+  setMaxHealth:
+    description: Sets health of a player
+    usage: /<command> <health> <playerName|*>
+    permission: HealthManager.setmaxhealth
+    permission-message: You don't have <permission>
+
